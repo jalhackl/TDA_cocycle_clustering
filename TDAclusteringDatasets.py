@@ -85,6 +85,8 @@ def create_2_overlapping_cycles():
     plt.axis('equal')
     plt.show()
 
+    return x
+
 def rotateMatrixX(x):
     return np.array([[1,0,0],[0,np.cos(x), -np.sin(x)], [0,np.sin(x), np.cos(x)]])
 

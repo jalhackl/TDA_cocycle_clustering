@@ -611,7 +611,7 @@ def cocycle_clustering_graph_path(D, X, cocycle, thresh, labels=None, id_list=No
 
 
 
-def apply_tda_clustering(x, all_get_label=False, num_voxels_per_axis = 10, min_points_per_voxel=5, point_fraction=0.1, target_r=False, target_radius_fraction=0.01, thresh_function=None, include_neighbors=True, low_density_removal=False, smoothing=False, smoothing_but_return_full=True, downsampling=False, downsampling_but_return_full=True, barycenter_assignment=True, density_assignment=False, discard_labels=True, nr_labels=None, discard_clusters=True, min_support_labels=10, min_thresh_labels=0.1, max_correl=0.85, min_support_clusters=10, min_thresh_clusters=0.1, nr_clusters=None, nearest_on_trajectory=False, only_decision_labels=True, remove_small=False, birth_weight=1, sub_const=0, return_threshes = True, plot_something=True, print_something=True, zero_value=0):
+def apply_tda_clustering(x, all_get_label=False, pers_array="comp_thres", num_voxels_per_axis = 10, min_points_per_voxel=5, point_fraction=0.1, target_r=False, target_radius_fraction=0.01, thresh_function=None, include_neighbors=True, low_density_removal=False, smoothing=False, smoothing_but_return_full=True, downsampling=False, downsampling_but_return_full=True, barycenter_assignment=True, density_assignment=False, discard_labels=True, nr_labels=None, discard_clusters=True, min_support_labels=10, min_thresh_labels=0.1, max_correl=0.85, min_support_clusters=10, min_thresh_clusters=0.1, nr_clusters=None, nearest_on_trajectory=False, only_decision_labels=True, remove_small=False, birth_weight=1, sub_const=0, return_threshes = True, plot_something=True, print_something=True, zero_value=0):
     """
     Description:
         main function, application of TDA (co)cycle clustering
@@ -650,9 +650,9 @@ def apply_tda_clustering(x, all_get_label=False, num_voxels_per_axis = 10, min_p
     D, cocycles, diagrams = compute_persistent_homology(x)
     
     if return_threshes == False:
-        labels = persistent_cocycles_one_hot_paths(D, x, cocycles, diagrams, plot_something=plot_something, thresh_function=thresh_function, include_neighbors=include_neighbors, return_threshes = return_threshes)
+        labels = persistent_cocycles_one_hot_paths(D, x, cocycles, diagrams, plot_something=plot_something, pers_array=pers_array, thresh_function=thresh_function, include_neighbors=include_neighbors, return_threshes = return_threshes)
     else:
-        labels, threshes, death_threshes = persistent_cocycles_one_hot_paths(D, x, cocycles, diagrams, plot_something=plot_something, thresh_function=thresh_function,include_neighbors=include_neighbors, return_threshes = return_threshes)
+        labels, threshes, death_threshes = persistent_cocycles_one_hot_paths(D, x, cocycles, diagrams, plot_something=plot_something, pers_array=pers_array, thresh_function=thresh_function,include_neighbors=include_neighbors, return_threshes = return_threshes)
 
     retained_indices = np.array(list(range(labels.shape[1])))
     if discard_labels == True:
@@ -706,7 +706,7 @@ def apply_tda_clustering(x, all_get_label=False, num_voxels_per_axis = 10, min_p
 
 
 
-def apply_tda_clustering_trajectories(x, all_get_label=False, thresh_function=None, num_voxels_per_axis = 10, min_points_per_voxel=5, point_fraction=0.1, target_r=False, target_radius_fraction=0.01, include_neighbors=True, low_density_removal=False, smoothing=False, smoothing_but_return_full=True, downsampling=False, downsampling_but_return_full=True, discard_labels=True, comb_nr=None, discard_clusters=False, min_support_labels=10, min_thresh_labels=0.25, max_correl=0.85, min_support_clusters=10, min_thresh_clusters=0.1, nr_clusters=None, nearest_on_trajectory=False, only_decision_labels=True, remove_small=False, birth_weight=1, sub_const=0, return_threshes = True, plot_something=True, print_something=True, zero_value=0):
+def apply_tda_clustering_trajectories(x, all_get_label=False, pers_array="comp_thres", thresh_function=None, num_voxels_per_axis = 10, min_points_per_voxel=5, point_fraction=0.1, target_r=False, target_radius_fraction=0.01, include_neighbors=True, low_density_removal=False, smoothing=False, smoothing_but_return_full=True, downsampling=False, downsampling_but_return_full=True, discard_labels=True, comb_nr=None, discard_clusters=False, min_support_labels=10, min_thresh_labels=0.25, max_correl=0.85, min_support_clusters=10, min_thresh_clusters=0.1, nr_clusters=None, nearest_on_trajectory=False, only_decision_labels=True, remove_small=False, birth_weight=1, sub_const=0, return_threshes = True, plot_something=True, print_something=True, zero_value=0):
     """
     Description:
         main function, application of TDA (co)cycle clustering; trajectory-based version
@@ -744,7 +744,7 @@ def apply_tda_clustering_trajectories(x, all_get_label=False, thresh_function=No
     D, cocycles, diagrams = compute_persistent_homology(x)
     
     
-    biggraph, subgs, labels, threshes, death_threshes = persistent_cocycles_one_hot_paths_trajectory_based(D, x, cocycles, diagrams, thresh_function=thresh_function, comb_nr=comb_nr, plot_something=plot_something, include_neighbors=include_neighbors, return_threshes = return_threshes)
+    biggraph, subgs, labels, threshes, death_threshes = persistent_cocycles_one_hot_paths_trajectory_based(D, x, cocycles, diagrams, pers_array=pers_array, thresh_function=thresh_function, comb_nr=comb_nr, plot_something=plot_something, include_neighbors=include_neighbors, return_threshes = return_threshes)
     
     
     retained_indices = np.array(list(range(labels.shape[1])))
