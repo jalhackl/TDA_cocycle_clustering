@@ -298,10 +298,10 @@ def remove_unimportant_clusters(int_labels, min_support=10, min_thresh=0.1, nr_c
     for ic, count in enumerate(counts):
         if min_support != None:
             if count < min_support:
-                clusters_to_be_removed.add(ic)
+                clusters_to_be_removed.add(unique_values[ic])
         if min_thresh != None:
             if count < min_thresh * max_value:
-                clusters_to_be_removed.add(ic)
+                clusters_to_be_removed.add(unique_values[ic])
                 
     int_labels = [0 if nr in clusters_to_be_removed else nr for nr in int_labels ]
 
